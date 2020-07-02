@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=0">
+    <title>双色球生成器</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+        }
+        #ssqBox{
+            position: relative;
+        }
+        .createNum{
+            margin: 0 10px;
+        }
+        .title{
+            width: 400px;
+            height: 20px;
+            margin: auto;
+            background-color: whitesmoke;
+            text-align: center;
+        }
+        #ssqbody {
+            width: 400px;
+            height: 500px;
+            background-color: whitesmoke;
+            margin: auto;
+        }
+
+        .bollBox {
+            padding: 8px 0;
+            width: 340px;
+            margin: auto;
+        }
+
+        .bollArea {
+            width: 30px;
+            height: 30px;
+            color: white;
+            font-size: 15px;
+            background-color: red;
+            border-radius: 20px;
+            display: inline-block;
+            text-align: center;
+            line-height: 30px;
+            margin: 0 5px;
+        }
+
+        .redBoll {
+            background-color: red;
+        }
+
+        .blueBoll {
+            background-color: #1d90e6;
+            margin-left: 20px;
+        }
+
+        .btn {
+            width: 70px;
+            height: 30px;
+            border-radius: 10px;
+            text-align: center;
+            line-height: 30px;
+            background: #2b9af2;
+            position: absolute;
+            z-index: 10;
+            bottom: 3px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        .spanNum{
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            text-align: center;
+            line-height: 24px;
+            background-color: #4caf50;
+            border-radius: 20px;
+        }
+    </style>
+</head>
+<body>
+<div id="ssqBox">
+    <div class="title">欢迎使用</div>
+    <div class="title">
+        <span class="minusNum spanNum" onclick="minusNum()">-</span>
+        <span class="createNum">1</span>
+        <span class="addNum spanNum" onclick="addNum()">+</span>
+    </div>
+
+    <div id="ssqbody">
+
+    </div>
+    <div class="btn" onclick="createBoll()">
+        机选
+    </div>
+</div>
+</body>
+<script>
+    let createNum = 1;
+    let bollBox = document.querySelector('.bollBox');
+    let btn = document.querySelector('.btn');
+    let createNumSpan = document.querySelector('.createNum');
+    let ssqbody = document.querySelector('#ssqbody');
+    console.log(bollBox);
+    let blueObj = {};
+    let redAry = [];
+    let blueAry = [];
+    function addNum() {
+        if(createNum<10){
+            createNumSpan.innerHTML = ++createNum
+        }
+    }
+    function minusNum() {
+        if(createNum>1){
+            createNumSpan.innerHTML = --createNum
+        }
+    }
+    function createBoll() {
+        while (redAry.length < createNum) {
+            let redObj = {};
+            while (Object.keys(redObj).length < 6) {
+                let redBollNum = Math.floor(Math.random() * 32) + 1;
+                redObj[redBollNum] = redBollNum;
+            }
+            let bludBollNum = Math.floor(Math.random() * 15) + 1;
+            blueAry.push(bludBollNum);
+            redAry.push(redObj);
+        }
+        addBoll()
+    }
+
+    function addBoll() {
+        let bollStrs = '';
+        for (let i = 0; i < redAry.length; i++) {
+            let bollStr = '';
+            for (let j = 0; j < Object.keys(redAry[i]).length; j++) {
+                let bollKey = Object.keys(redAry[i])[j];
+                bollStr += `<span class="redBoll bollArea">${bollKey}</span>`
+            }
+            bollStr += ` <span class="blueBoll bollArea">${blueAry[i]}</span>`;
+            bollStr = `<div class="bollBox">` + bollStr + `</div>`;
+            bollStrs += bollStr
+        }
+        ssqbody.innerHTML = bollStrs;
+        blueAry = [];
+        redAry = [];
+    }
+</script>
+</html>
