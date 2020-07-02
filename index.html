@@ -129,10 +129,10 @@
         while (redAry.length < createNum) {
             let redObj = {};
             while (Object.keys(redObj).length < 6) {
-                let redBollNum = Math.floor(Math.random() * 32) + 1;
+                let redBollNum = Math.floor(Math.random() * 33) + 1;
                 redObj[redBollNum] = redBollNum;
             }
-            let bludBollNum = Math.floor(Math.random() * 15) + 1;
+            let bludBollNum = Math.floor(Math.random() * 16) + 1;
             blueAry.push(bludBollNum);
             redAry.push(redObj);
         }
